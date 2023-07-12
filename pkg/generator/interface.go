@@ -20,9 +20,3 @@ type Formatter interface {
 	CountShift() uint8
 	StepShift() uint8
 }
-
-type Planner interface {
-	GetEpoch() int64
-	Sequencer
-	Formatter
-}

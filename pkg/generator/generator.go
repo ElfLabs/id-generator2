@@ -4,6 +4,9 @@ import (
 	"errors"
 	"strconv"
 	"sync"
+
+	"github.com/ElfLabs/id-generator/pkg/format"
+	"github.com/ElfLabs/id-generator/pkg/sequencer"
 )
 
 var ErrCountOverflow = errors.New("count overflow")
@@ -38,10 +41,10 @@ func NewGeneratorWithOptions(region, node int64, options Options) (Generator, er
 	}
 
 	if g.sequencer == nil {
-		return nil, errors.New("generator sequencer is nil")
+		g.sequencer = sequencer.NewTimestampSequencer()
 	}
 	if g.formatter == nil {
-		return nil, errors.New("generator formatter is nil")
+		g.formatter = format.NewSnowflakeFormat()
 	}
 
 	regionMax := GetRegionMax(g.formatter)
